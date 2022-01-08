@@ -47,6 +47,8 @@ const useStyles = makeStyles({
 
     paper:{
       width: '100%',
+      alignItems:'center',
+      justifyContent:'center',
     }
 
 });
@@ -93,166 +95,185 @@ const About = () =>{
                 <NavBar/>
 
                 <Grid container
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                    spacing={2}
-                    style={{padding:40}}
-                    >
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                        spacing={0}
+                />
+
+
+                    <Grid item xs>
+
+                        <Grid container
+                            direction="row"
+                            justifyContent="center"
+                            alignItems="center"
+                            spacing={30}
+                            style={{padding:40}}
+                            >
                         
 
-                        <Grid item xs>
-                        <Card  style={{background: 'transparent', boxShadow: 'none',  maxWidth: 450 }}>
-                            <CardMedia
-                                component="img"
-                                src={slider_text}
-                            />
-                        </Card>
-                        </Grid>
-
-
-
-                        <Grid item xs>
-
-                        <Box sx={{ maxWidth: 500, flexGrow: 1 }}>
-                                <Paper
-                                    square
-                                    elevation={0}
-                                    sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    height: 50,
-                                    pl: 2,
-                                    bgcolor: 'background.default',
-                                    }}
-                                >
-                                    
-                                </Paper>
-                                <AutoPlaySwipeableViews
-                                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                                    index={activeStep}
-                                    onChangeIndex={handleStepChange}
-                                    enableMouseEvents
-                                >
-                                    {images.map((step, index) => (
-                                    <div key={step.label}>
-                                        {Math.abs(activeStep - index) <= 2 ? (
-                                        <Box
-                                            component="img"
-                                            sx={{
-                                            height: 320,
-                                            display: 'block',
-                                            maxWidth: 500,
-                                            overflow: 'hidden',
-                                            width: '100%',
-                                            }}
-                                            src={step.imgPath}
-                                            alt={step.label}
-                                        />
-                                        ) : null}
-                                    </div>
-                                    ))}
-                                </AutoPlaySwipeableViews>
-                                <MobileStepper
-                                    steps={maxSteps}
-                                    position="static"
-                                    activeStep={activeStep}
-                                    nextButton={
-                                    <Button
-                                        size="small"
-                                        onClick={handleNext}
-                                        disabled={activeStep === maxSteps - 1}
-                                    >
-                                        Next
-                                        {theme.direction === 'rtl' ? (
-                                        <KeyboardArrowLeft />
-                                        ) : (
-                                        <KeyboardArrowRight />
-                                        )}
-                                    </Button>
-                                    }
-                                    backButton={
-                                    <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                                        {theme.direction === 'rtl' ? (
-                                        <KeyboardArrowRight />
-                                        ) : (
-                                        <KeyboardArrowLeft />
-                                        )}
-                                        Back
-                                    </Button>
-                                    }
-                                />
-                                </Box>
-                        </Grid>
-
-                    </Grid>
-
-
-                    <Grid container
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                    spacing={10}
-                    style={{padding:30}}
-                    >
-
-                        <Grid item xs>
-                            <iframe src="https://www.youtube-nocookie.com/embed/FqQAjkZOBeY"  width={600} height={500} />
-                        </Grid>
-
-                        <Grid item xs>
-                            <List>
-
-                            <Link href="https://www.printam3d.ro/blog/totul-despre-imprimantele-3d-/" underline="none">
-                                <ListItem>
-                                    <ListItemAvatar>
-                                    <Avatar>
-                                        <FiberManualRecordIcon color="primary" />
-                                    </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText >
-                                        <Typography variant="h5" component="div" sx={{ flexGrow: 1 , fontWeight: 'bold' }} className={classes.appbar_text}>
-                                        Totul despre imprimante 3D
-                                        </Typography>
-                                    </ListItemText>
-                                </ListItem>
-                            </Link>
-                            
-                            <Link href="https://www.printam3d.ro/blog/totul-despre-printarea-3d-/" underline="none">
-                                <ListItem>
-                                    <ListItemAvatar>
-                                    <Avatar>
-                                        <FiberManualRecordIcon color="primary"/>
-                                    </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText >
-                                        <Typography variant="h5" component="div" sx={{ flexGrow: 1 , fontWeight: 'bold' }} className={classes.appbar_text}>
-                                        Totul despre printarea 3D
-                                        </Typography>
-                                    </ListItemText>
-                                </ListItem>
-                                </Link>
-
-                                <Link href="https://instrumentic.info/ro/hardware/3d-tv.html#gsc.tab=0" underline="none">
+                            <Grid item >
                                 
-                                <ListItem>
-                                    <ListItemAvatar>
-                                    <Avatar>
-                                        <FiberManualRecordIcon color="primary" />
-                                    </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText >
-                                    <Typography variant="h5" component="div" sx={{ flexGrow: 1 , fontWeight: 'bold' }} className={classes.appbar_text}>
-                                    Totul despre sisteme 3D polarizat
-                                        </Typography>
-                                    </ListItemText>
-                                </ListItem>
-                                </Link>
+                                <Card  style={{background: 'transparent', boxShadow: 'none',  maxWidth: 450 }}>
+                                    <CardMedia
+                                        component="img"
+                                        src={slider_text}
+                                    />
+                                </Card>
 
-                            </List>
+                            </Grid>
+
+
+
+                            <Grid item >
+
+                                <Box sx={{ maxWidth: 500, flexGrow: 1 }}>
+                                    <Paper
+                                        square
+                                        elevation={0}
+                                        sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        height: 50,
+                                        pl: 2,
+                                        bgcolor: 'background.default',
+                                        }}
+                                    >
+                                    
+                                    </Paper>
+                                    <AutoPlaySwipeableViews
+                                            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                                            index={activeStep}
+                                            onChangeIndex={handleStepChange}
+                                            enableMouseEvents
+                                        >
+                                            {images.map((step, index) => (
+                                            <div key={step.label}>
+                                                {Math.abs(activeStep - index) <= 2 ? (
+                                                    <Box
+                                                component="img"
+                                                sx={{
+                                                height: 320,
+                                                display: 'block',
+                                                maxWidth: 500,
+                                                overflow: 'hidden',
+                                                width: '100%',
+                                                }}
+                                                src={step.imgPath}
+                                                alt={step.label}
+                                            />
+                                        ) : null}
+                                        </div>
+                                    ))}
+                                        </AutoPlaySwipeableViews>
+                                        <MobileStepper
+                                            steps={maxSteps}
+                                            position="static"
+                                            activeStep={activeStep}
+                                            nextButton={
+                                            <Button
+                                                size="small"
+                                                onClick={handleNext}
+                                                disabled={activeStep === maxSteps - 1}
+                                            >
+                                                Next
+                                                {theme.direction === 'rtl' ? (
+                                                <KeyboardArrowLeft />
+                                                ) : (
+                                                <KeyboardArrowRight />
+                                                )}
+                                            </Button>
+                                            }
+                                            backButton={
+                                            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                                                {theme.direction === 'rtl' ? (
+                                                <KeyboardArrowRight />
+                                                ) : (
+                                                <KeyboardArrowLeft />
+                                                )}
+                                                Back
+                                            </Button>
+                                            }
+                                        />
+                                        </Box>
+
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                
+
+                <Grid item xs>
+
+
+                        <Grid container
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center"
+                        spacing={20}
+                        style={{padding:40}}
+                        >
+
+                            <Grid item >
+                                <iframe src="https://www.youtube-nocookie.com/embed/FqQAjkZOBeY"  width={600} height={500} />
+                            </Grid>
+
+                            <Grid item >
+                                <List>
+
+                                <Link href="https://www.printam3d.ro/blog/totul-despre-imprimantele-3d-/" underline="none">
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                        <Avatar>
+                                            <FiberManualRecordIcon color="primary" />
+                                        </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText >
+                                            <Typography variant="h5" component="div" sx={{ flexGrow: 1 , fontWeight: 'bold' }} className={classes.appbar_text}>
+                                            Totul despre imprimante 3D
+                                            </Typography>
+                                        </ListItemText>
+                                    </ListItem>
+                                </Link>
+                                
+                                <Link href="https://www.printam3d.ro/blog/totul-despre-printarea-3d-/" underline="none">
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                        <Avatar>
+                                            <FiberManualRecordIcon color="primary"/>
+                                        </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText >
+                                            <Typography variant="h5" component="div" sx={{ flexGrow: 1 , fontWeight: 'bold' }} className={classes.appbar_text}>
+                                            Totul despre printarea 3D
+                                            </Typography>
+                                        </ListItemText>
+                                    </ListItem>
+                                    </Link>
+
+                                    <Link href="https://instrumentic.info/ro/hardware/3d-tv.html#gsc.tab=0" underline="none">
+                                    
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                        <Avatar>
+                                            <FiberManualRecordIcon color="primary" />
+                                        </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText >
+                                        <Typography variant="h5" component="div" sx={{ flexGrow: 1 , fontWeight: 'bold' }} className={classes.appbar_text}>
+                                        Totul despre sisteme 3D polarizat
+                                            </Typography>
+                                        </ListItemText>
+                                    </ListItem>
+                                    </Link>
+
+                                </List>
+                            </Grid>
                         </Grid>
 
                     </Grid>
+
+                    
 
                 <Footer/>
             </Paper>
