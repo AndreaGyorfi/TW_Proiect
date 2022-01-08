@@ -106,16 +106,17 @@ const MainMenu = () =>{
         direction="row"
         justifyContent="center"
         alignItems="center"
+        spacing={20}
         style={{ paddingTop: 35 }}
         >
 
-          <Grid item xs>
+          <Grid item xs={3} >
 
           <Cube_3d/>
 
           </Grid>
         
-          <Grid item xs style={{ paddingLeft: 50 }}  >
+          <Grid item    >
 
             <Card sx={{ width: 350 }} elevation={5} >
               <CardContent>
@@ -149,10 +150,10 @@ const MainMenu = () =>{
         justifyContent="center"
         alignItems="center"
         style={{ padding: 30, paddingTop:60 }}
-        spacing={2}
+        spacing={30}
         >
 
-          <Grid item xs>
+          <Grid item >
 
             <Card sx={{ maxWidth: 345 }} elevation={5}>
             <CardMedia
@@ -176,7 +177,7 @@ const MainMenu = () =>{
           </Grid>
 
 
-          <Grid item xs>
+          <Grid item >
 
             <Card sx={{ maxWidth: 345 }} elevation={5}>
             <CardMedia
@@ -200,7 +201,7 @@ const MainMenu = () =>{
             </Grid>
 
 
-            <Grid item xs>
+            <Grid item >
 
             <Card sx={{ maxWidth: 345 }} elevation={5}>
             <CardMedia
