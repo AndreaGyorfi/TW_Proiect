@@ -150,7 +150,7 @@ const MainMenu = () =>{
         justifyContent="center"
         alignItems="center"
         style={{ padding: 30, paddingTop:60 }}
-        spacing={30}
+        spacing={20}
         >
 
           <Grid item >
