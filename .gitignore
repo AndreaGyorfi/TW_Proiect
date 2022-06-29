@@ -1,2 +1,6 @@
 3d_env/
 ddd_frontend/node_modules/
+backend/db.sqlite3
+backend/user/migrations/
+backend/quiz/migrations/
+backend/forum/migrations/

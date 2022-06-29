@@ -67,14 +67,27 @@ export default function Login() {
       if (response.status === 200) {
         let base64User = response.data.access.split(".")[1];
         base64User = JSON.parse(window.atob(base64User));
+        console.log("user data",base64User);
         localStorage.setItem("currentUser_email", base64User.email);
         localStorage.setItem("currentUser", base64User.user);
-        history.push("/"); // Push home
+        console.log(base64User.is_staff);
+        if(base64User.is_staff === true){
+          history.push("/adminMain");
+        }else{
+          history.push("/");
+        }
+        
       }
     } catch (error) {
       setError(error.response.data.detail);
     }
   };
+
+
+  const goToRegister = () => {
+    console.log("Go to register");
+    history.push('/register');
+  }
 
   
   return (
@@ -125,6 +138,16 @@ export default function Login() {
             onClick={handleLogin}
           >
             Sign In
+          </Button>
+          <div><br/></div>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={() => goToRegister()}
+          >
+            Register
           </Button>
           {error && (
             <div className="form-group">

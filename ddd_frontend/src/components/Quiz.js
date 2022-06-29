@@ -17,272 +17,163 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Grid';
+import history from './history';
+
+import quizServices from '../services/quiz.services';
 
 
-const steps = ['1', '2', '3', '4','5'];
 
-const Quiz = () =>{
+
+
+const Quiz = (props) =>{
 
   const [activeStep, setActiveStep] = React.useState(0);
-  let totalScore_help = 0;
   const [totalScore, setTotalScore] = React.useState(0);
-  const [ q1_ans, setQ1_ans] = React.useState('');
-  const [ q2_ans, setQ2_ans] = React.useState('');
-  const [ q3_ans, setQ3_ans] = React.useState('');
-  const [ q4_ans, setQ4_ans] = React.useState('');
-  const [ q5_ans, setQ5_ans] = React.useState('');
-
-
-  const handleQ1 = (event) =>{
-    setQ1_ans(event.target.value);
-  }
-
-  const handleQ2 = (event) =>{
-    setQ2_ans(event.target.value);
-  }
-
-  const handleQ3 = (event) =>{
-    setQ3_ans(event.target.value);
-  }
-
-  const handleQ4 = (event) =>{
-    setQ4_ans(event.target.value);
-  }
-
-  const handleQ5 = (event) =>{
-    setQ5_ans(event.target.value);
-  }
+  const [steps, setSteps] = React.useState([]);
+  const [quiz, setQuiz] = React.useState({});
+  const [answer, setAnswer] = React.useState('');
+  const [allAnswers, setAllanswers] = React.useState([]);
 
 
   useEffect(()=>{
-    if(q1_ans === 'svg'){
-        totalScore_help = totalScore_help + 1;
+    retriveQuiz(props.match.params.id);
+  },[])  
+
+  const retriveQuiz = async (id) =>{
+      try {
+
+        const response = await quizServices.getQuiz(id);
+        console.log(response.data);
+        setQuiz(response.data);
+        console.log(Array.from(Array(response.data['questions'].length).keys()));
+        setSteps(Array.from(Array(response.data['questions'].length).keys()))
+        
+
+    } catch (e) {
+        console.log(e);
     }
-
-    if(q2_ans === 'gravitatea'){
-        totalScore_help = totalScore_help + 1;
-    }
-
-    if(q3_ans === '3_dimensiuni'){
-        totalScore_help = totalScore_help + 1;
-    }
-
-    if(q4_ans === 'left_red_right_blue'){
-        totalScore_help  = totalScore_help +1;
-    }
-
-    if(q5_ans === 'personalizare'){
-        totalScore_help = totalScore_help +1;
-    }
-
-    setTotalScore(totalScore_help)
-
-  },[q1_ans, q2_ans, q3_ans, q4_ans, q5_ans])
+  }
 
 
 
   const handleNext = () => {
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setAnswer('');
    
   };
 
-  const handleReset = () => {
+  const handleAnswer = (event) =>{
+    const {name, value } = event.target;
+    console.log(value);
+    console.log(name);
+    setAnswer(value);
+    let array = [];
+    array = allAnswers;
+    array.push(value);
+    setAllanswers(array);
+  }
+
+  const handleFinish = () =>{
+    console.log("All answers",allAnswers);
+
+    let question_array = quiz.questions
+    console.log("question array ", question_array);
+
+    let total_score = 0;
+
+    for(let i=0; i<allAnswers.length;i++){
+      console.log(question_array[i].answer_owner['correct_answer']);
+      if(allAnswers[i] === question_array[i].answer_owner['correct_answer']){
+          total_score = total_score + 1;
+      }
+    }
+
+    setTotalScore(total_score);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+  }
+
+  useEffect(()=>{
+
+  },[totalScore])
+
+  const handleReset  = async () =>{
     setActiveStep(0);
-    setQ1_ans('');
-    setQ2_ans('');
-    setQ3_ans('');
-    setQ4_ans('');
-    setQ5_ans('');
     setTotalScore(0);
-  };
+
+    let data ={
+      result:totalScore,
+      quiz_id: quiz.id,
+      user:localStorage.getItem('currentUser'),
+    }
+
+    console.log(data);
+
+    
+    try {
+
+        const response = await quizServices.addQuizResult(data);
+
+        console.log("response", response.data);
+
+        if (response.data['message'] === "success") {
+            history.push('/quizzes');
+        } else {
+            console.log('save error');
+        }
+
+    } catch (e) {
+        console.log(e);
+    }
+}
 
   function getStepContent(step){
-    switch (step) {
-        case 0:
-          return(  
-              <>
-              <div align="center">
-              <Card sx={{ maxWidth: 500 }} elevation={5}>
-               
-                <CardContent>
-                    <Typography variant="h5">
-                    Care este formatul de fișier pe care l-am salva din Google Drawing?  
-                    </Typography>
-                </CardContent>
+    if(quiz!== undefined){
+    let questions = quiz.questions
+    if(questions !== undefined){
+    let question = questions[parseInt(step)]
+    
+    return(  
+      <>
+      <div align="center">
+      <Card sx={{ maxWidth: 500 }} elevation={5}>
+       
+        <CardContent>
+            <Typography variant="h5">
+              {question.question_text}
+            </Typography>
+        </CardContent>
 
-            <CardActions>
-               
-                <FormControl component="fieldset">
+    <CardActions>
+       
+        <FormControl component="fieldset">
+
+                <RadioGroup
+                    row
+                    aria-label="gender"
+                    name="controlled-radio-buttons-group"
+                    value={answer}
+                    onChange={handleAnswer}
+                >
+                    <FormControlLabel value="A" control={<Radio />} label={question.answer_owner['a_res']} />
+                    <FormControlLabel value="B" control={<Radio />} label={question.answer_owner['b_res']} />
+                    <FormControlLabel value="C" control={<Radio />} label={question.answer_owner['c_res']} />
+                    <FormControlLabel value="D" control={<Radio />} label={question.answer_owner['d_res']} />
+                </RadioGroup>
+            </FormControl>
+       
+    </CardActions>
+    </Card>
+    </div>
+      </>
       
-                        <RadioGroup
-                            row
-                            aria-label="gender"
-                            name="controlled-radio-buttons-group"
-                            value={q1_ans}
-                            onChange={handleQ1}
-                        >
-                            <FormControlLabel value="stl" control={<Radio />} label="stl" />
-                            <FormControlLabel value="jpg" control={<Radio />} label="jpg" />
-                            <FormControlLabel value="svg" control={<Radio />} label="svg" />
-                            <FormControlLabel value="gif" control={<Radio />} label="gif" />
-                        </RadioGroup>
-                    </FormControl>
-               
-            </CardActions>
-            </Card>
-            </div>
-              </>
-              
-            );
-        case 1:
-          return(
-            <>
-            <div align="center">
-            <Card sx={{ maxWidth: 500 }} elevation={5}>
-             
-              <CardContent>
-                  <Typography variant="h5">
-                  Care este cel mai important lucru de care ar trebui să iei în considerare atunci când faci ceva în 3d?  
-                  </Typography>
-              </CardContent>
+    );
+    }
+    }
+  }
 
-          <CardActions>
-           
-              <FormControl component="fieldset">
-    
-                      <RadioGroup
-                          row
-                          aria-label="gender"
-                          name="controlled-radio-buttons-group"
-                          value={q2_ans}
-                          onChange={handleQ2}
-                      >
-                          <FormControlLabel value="mărimea" control={<Radio />} label="mărimea" />
-                          <FormControlLabel value="gravitatea" control={<Radio />} label="gravitatea" />
-                          <FormControlLabel value="funcţionalitate" control={<Radio />} label="funcţionalitate" />
-                          <FormControlLabel value="calitate" control={<Radio />} label="calitate" />
-                      </RadioGroup>
-                  </FormControl>
-              
-          </CardActions>
-          </Card>
-          </div>
-            </>
-              
-              );
-        case 2:
-            return(
-                <>
-                <div align="center">
-                <Card sx={{ maxWidth: 500 }} elevation={5}>
-                 
-                  <CardContent>
-                      <Typography variant="h5">
-                      Ce înseamnă 3D? 
-                      </Typography>
-                  </CardContent>
-    
-              <CardActions>
-                  
-                  <FormControl component="fieldset">
-        
-                          <RadioGroup
-                              row
-                              aria-label="gender"
-                              name="controlled-radio-buttons-group"
-                              value={q3_ans}
-                              onChange={handleQ3}
-                          >
-                              <FormControlLabel value="filme" control={<Radio />} label="filme" />
-                              <FormControlLabel value="3_dimensiuni" control={<Radio />} label="3 dimensiuni" />
-                              <FormControlLabel value="stereoscopic" control={<Radio />} label="stereoscopic" />
-                              <FormControlLabel value="grafica pe computer" control={<Radio />} label="grafica pe computer" />
-                          </RadioGroup>
-                      </FormControl>
-                  
-              </CardActions>
-              </Card>
-              </div>
-                </>
-               
-            );
-        case 3:
-            return(
-                <>
-                <div align="center">
-                <Card sx={{ maxWidth: 500 }} elevation={5}>
-                 
-                  <CardContent>
-                      <Typography variant="h5">
-                      Cum arată ochelarii 3D de modă veche?
-                      </Typography>
-                  </CardContent>
-    
-              <CardActions>
-                  
-                  <FormControl component="fieldset">
-        
-                          <RadioGroup
-                              row
-                              aria-label="gender"
-                              name="controlled-radio-buttons-group"
-                              value={q4_ans}
-                              onChange={handleQ4}
-                          >
-                              <FormControlLabel value="left blue, right red" control={<Radio />} label="left blue, right red" />
-                              <FormControlLabel value="left_red_right_blue" control={<Radio />} label="left red, right blue" />
-                              <FormControlLabel value="left black, right white" control={<Radio />} label="left black, right white" />
-                              <FormControlLabel value="left yellow, right purple" control={<Radio />} label="left yellow, right purple" />
-                          </RadioGroup>
-                      </FormControl>
-                  
-              </CardActions>
-              </Card>
-              </div>
-                </>
-               
-            );
-        case 4:
-            return(
-                <>
-                <div align="center">
-                <Card sx={{ maxWidth: 500 }} elevation={5}>
-                 
-                  <CardContent>
-                      <Typography variant="h5">
-                      Ce face imprimarea 3D superioară altor tehnici de crafting?
-                      </Typography>
-                  </CardContent>
-    
-              <CardActions>
-                  
-                  <FormControl component="fieldset">
-        
-                          <RadioGroup
-                              row
-                              aria-label="gender"
-                              name="controlled-radio-buttons-group"
-                              value={q5_ans}
-                              onChange={handleQ5}
-                          >
-                              <FormControlLabel value="personalizare" control={<Radio />} label="personalizare" />
-                              <FormControlLabel value="eficiență" control={<Radio />} label="eficiență" />
-                              <FormControlLabel value="rapiditate" control={<Radio />} label="rapiditate" />
-                              <FormControlLabel value="calitate" control={<Radio />} label="calitate" />
-                          </RadioGroup>
-                      </FormControl>
-                  
-              </CardActions>
-              </Card>
-              </div>
-                </>
-             
-            );
-        default:
-          return "Unknown step";
-      }
-}
+ 
 
 
 
@@ -292,7 +183,7 @@ const Quiz = () =>{
 
             <Box sx={{ width: '100%' }} style={{paddingTop:20}}>
       <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
+        {steps !== undefined && steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
           return (
@@ -320,7 +211,7 @@ const Quiz = () =>{
          
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleReset} variant="contained">Reset</Button>
+            <Button onClick={handleReset} variant="contained">Save</Button>
           </Box>
         </React.Fragment>
       ) : (
@@ -330,9 +221,16 @@ const Quiz = () =>{
             
             
             
-            <Button onClick={handleNext} variant="contained">
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button>
+            
+              {activeStep === steps.length - 1 ? (<>
+                <Button onClick={handleFinish} variant="contained">
+                Finish
+                </Button>
+              </>) : (<>
+                <Button onClick={handleNext} variant="contained">Next</Button>
+              
+              </>)}
+            
             
           </Box>
         </React.Fragment>

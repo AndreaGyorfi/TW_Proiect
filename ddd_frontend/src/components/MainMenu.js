@@ -1,4 +1,4 @@
-import React,{ useRef, useState } from "react";
+import React,{ useEffect, useRef, useState } from "react";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -21,7 +21,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Cube_3d from "./Cube_3d";
 //images
 import image from '../assets/main_pic_first.png';
-import card1_image from '../assets/card1_image.png';
+import card1_image from '../assets/card1_image.jpeg';
 import card2_image from '../assets/card2_image.png';
 import card3_image from '../assets/card3_image.png';
 
@@ -55,6 +55,10 @@ const MainMenu = () =>{
   const goToAbout = () =>{
     history.push("/about");
   }
+
+  useEffect(()=>{
+      
+  },[])
     
 
     return(
@@ -200,7 +204,7 @@ const MainMenu = () =>{
 
             </Grid>
 
-
+          {/* 
             <Grid item >
 
             <Card sx={{ maxWidth: 345 }} elevation={5}>
@@ -223,6 +227,7 @@ const MainMenu = () =>{
             </Card>
 
             </Grid>
+            */}
 
 
 

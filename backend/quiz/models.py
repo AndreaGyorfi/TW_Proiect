@@ -1,9 +1,7 @@
 from typing import Callable
 from django.db import models
 from django.db.models.deletion import CASCADE
-
-class Quiz(models.Model):
-    results = models.CharField(max_length=200, null=True, blank=True)
+from user.models import CustomUser
 
 class Answers(models.Model):
     a_res = models.CharField(max_length=200, null=True, blank=True)
@@ -14,8 +12,16 @@ class Answers(models.Model):
 
 class Questions(models.Model):
     question_text = models.CharField(max_length=200,null=True, blank=True)
-    quiz_owner = models.ForeignKey(Quiz, on_delete=CASCADE)
-    answer_owner = models.OneToOneField(Answers,on_delete=models.CASCADE,primary_key=True)
+    answer_owner = models.OneToOneField(Answers,on_delete=models.CASCADE,null=True, blank=True)
+
+class Quiz(models.Model):
+    name = models.CharField(max_length=200, null=True, blank=True)
+    questions = models.ManyToManyField(Questions, blank=True)
+
+class QuizResult(models.Model):
+    result = models.CharField(max_length=200, null=True, blank=True)
+    quiz = models.OneToOneField(Quiz, on_delete=models.CASCADE,null=True, blank=True)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
 
 
 

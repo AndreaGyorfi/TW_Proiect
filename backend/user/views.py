@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from requests import request
 from rest_framework_simplejwt.views import TokenObtainPairView,TokenCookieDeleteView
 from .serializers import MyTokenObtainPairSerializer
 from .serializers import CustomUserSerializer, CustomGetUser, UserSerializer
@@ -6,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework import status, permissions
 from rest_framework.response import Response 
 from rest_framework_simplejwt.settings import api_settings
+from django.contrib.auth.models import Permission
 from django.contrib.auth import get_user_model
 UserModel = get_user_model()
 from .models import *

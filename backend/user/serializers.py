@@ -15,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = UserModel
-        fields = ('username', 'email', )
+        fields = ('username', 'email', 'first_name','last_name','is_staff')
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -29,6 +29,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
        
         token['user'] = user.username
         token['email'] = user.email
+        token['is_staff'] = user.is_staff
         
         return token
 
@@ -36,7 +37,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class CustomGetUser(serializers.ModelSerializer):
 	class Meta:
 		model = CustomUser
-		fields = ('email', 'username')
+		fields = ('email', 'username','first_name','last_name','is_staff')
 
 
 
@@ -47,11 +48,13 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     email = serializers.EmailField(required=True)
     username = serializers.CharField()
+    first_name = models.CharField(blank=True, max_length=120)
+    last_name = models.CharField(blank=True, max_length=120)
     password = serializers.CharField(min_length=12, write_only=True)
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'username', 'password')
+        fields = ('email', 'username', 'password','first_name','last_name')
         extra_kwargs = {'password': {'write_only': True}}
 
 
@@ -62,8 +65,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
         email = validated_data['email']
         username = validated_data['username']
         max_similarity = 0.7
-        if len(password) < 12:
-            raise serializers.ValidationError(ugettext("Password length must be greater than 12 character"))
+        if len(password) < 8:
+            raise serializers.ValidationError(ugettext("Password length must be greater than 8 character"))
         elif not re.findall('[()[\]{}|\\`~!@#$%^&*_\-+=;:\'",<>./?]', password):
             raise serializers.ValidationError(ugettext("Your password must contain at least 1 symbol"))
         elif not re.findall('\d', password):

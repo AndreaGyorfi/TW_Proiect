@@ -37,7 +37,12 @@ import Footer from './Footer';
 import slider_1 from '../assets/slider_1.jpg';
 import slider_2 from '../assets/slider_2.jpg';
 import slider_3 from '../assets/slider_3.jpg';
+import slider_4 from '../assets/slider_4.jpg';
+import slider_5 from '../assets/slider_5.jpg';
 import slider_text from '../assets/slider_text.PNG';
+
+import imp_vid from '../assets/3d_imprimante_vid.mp4';
+//"https://www.youtube-nocookie.com/embed/FqQAjkZOBeY"
 
 const useStyles = makeStyles({
   
@@ -66,7 +71,16 @@ const images = [
     
     {
         imgPath: slider_3,
-    }
+    },
+
+    {
+        imgPath:slider_4,
+    },
+
+    {
+        imgPath:slider_5,
+    },
+
 ]
 
 const About = () =>{
@@ -154,7 +168,7 @@ const About = () =>{
                                                     <Box
                                                 component="img"
                                                 sx={{
-                                                height: 320,
+                                                height: 400,
                                                 display: 'block',
                                                 maxWidth: 500,
                                                 overflow: 'hidden',
@@ -215,7 +229,7 @@ const About = () =>{
                         >
 
                             <Grid item >
-                                <iframe src="https://www.youtube-nocookie.com/embed/FqQAjkZOBeY"  width={600} height={500} />
+                                <iframe src={imp_vid}  width={600} height={500} />
                             </Grid>
 
                             <Grid item >
@@ -245,13 +259,15 @@ const About = () =>{
                                         </ListItemAvatar>
                                         <ListItemText >
                                             <Typography variant="h5" component="div" sx={{ flexGrow: 1 , fontWeight: 'bold' }} className={classes.appbar_text}>
-                                            Totul despre printarea 3D
+                                            Totul despre scanare 3D
                                             </Typography>
                                         </ListItemText>
                                     </ListItem>
                                     </Link>
-
+                                    
+                                    {/* 
                                     <Link href="https://instrumentic.info/ro/hardware/3d-tv.html#gsc.tab=0" underline="none">
+                                    
                                     
                                     <ListItem>
                                         <ListItemAvatar>
@@ -266,6 +282,7 @@ const About = () =>{
                                         </ListItemText>
                                     </ListItem>
                                     </Link>
+                                    */}
 
                                 </List>
                             </Grid>
