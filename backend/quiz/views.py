@@ -310,4 +310,29 @@ def get_allResult(request,*args,**kwargs):
     
     return Response(all_result_ser.data)
 
+@api_view(['GET'])
+def getQuizResult(request,*args,**kwargs):
+    
+    if request.method == 'GET':
+        pk = kwargs.get('pk')
+        quiz_results = QuizResult.objects.filter(quiz__id=pk)
+        print(quiz_results)
+        quiz_results_ser = QuizResultSerializer(quiz_results, many=True)
+        all_dict = []
+        for item in quiz_results_ser.data:
+            print(item['id'])
+            print(item['result'])
+            print(item['user']['username'])
+            result_dict = {
+                "id":item['id'],
+                "result":item['result'],
+                "username":item['user']['username'],
+            }
+            all_dict.append(result_dict)
+
+        print(all_dict)
+    return Response(all_dict)
+
+
+
 

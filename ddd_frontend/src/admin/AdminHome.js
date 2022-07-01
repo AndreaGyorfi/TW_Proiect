@@ -7,12 +7,18 @@ import CardContent from '@material-ui/core/CardContent';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import history from '../components/history';
 import Typography from '@material-ui/core/Typography';
-
+import quiz_pic from '../assets/questions.jpg';
+import forum from '../assets/forum.svg';
 
 const AdminHome = () => {
 
     const goToManageQuiz = () => {
         history.push('/manageQuiz');
+    }
+
+    const goToManageForum = () =>{
+        history.push('/manageForum');
+        console.log('Manage forum');
     }
 
     return (
@@ -25,6 +31,7 @@ const AdminHome = () => {
                 justifyContent="center"
                 alignItems="center"
                 style={{padding:30}}
+                spacing={2}
             >
 
                 <Grid item >
@@ -39,12 +46,38 @@ const AdminHome = () => {
                             <CardMedia
                                 component="img"
                                 height="194"
-                                image="https://play-lh.googleusercontent.com/CC9gYlJbBCSFq8vKR1f_62oG17-3m7LEQ_GGZSoy_Kk-_uiDwBHX4eVzHkeI3i9Ztg"
+                                image={quiz_pic}
                                 alt="Paella dish"
                             />
                             <CardContent>
                                 <Typography fontFamily={'monospace'} align="center" variant="h4" >
                                     Manage Quiz
+                                </Typography>
+                            </CardContent>
+
+
+                        </ButtonBase>
+                    </Card>
+                </Grid>
+
+                <Grid item >
+                    <Card sx={{ maxWidth: 345, boxShadow: 3 }} >
+                        <ButtonBase
+                            style={{
+                                display: 'block',
+                                textAlign: 'initial'
+                            }}
+                            onClick={() => goToManageForum()}
+                        >
+                            <CardMedia
+                                component="img"
+                                height="194"
+                                image={forum}
+                                alt="Paella dish"
+                            />
+                            <CardContent>
+                                <Typography fontFamily={'monospace'} align="center" variant="h4" >
+                                    Manage Forum
                                 </Typography>
                             </CardContent>
 

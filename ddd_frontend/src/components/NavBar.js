@@ -62,6 +62,10 @@ const NavBar = () =>{
         history.push("/forum");
     }
 
+    const goToLeaderBoard = () =>{
+        history.push("/leaderboard");
+    }
+
     useEffect(()=>{
 
         
@@ -106,6 +110,7 @@ const NavBar = () =>{
                             <>
                             <Button color="primary" variant="contained" onClick={goToQuiz}>Quiz</Button>
                             <Button color="primary" variant="contained" onClick={goToForum}>Forum</Button>
+                            <Button color="primary" variant="contained" onClick={goToLeaderBoard}>Leaderboard</Button>
                             </>
                             )
                         }

@@ -20,6 +20,7 @@ import clsx from 'clsx';
 import ListIcon from '@material-ui/icons/List';
 import HomeIcon from '@material-ui/icons/Home';
 import HelpIcon from '@material-ui/icons/Help';
+import PeopleIcon from '@material-ui/icons/People';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -75,6 +76,10 @@ const AdminNavbar = () => {
       history.push('/quizList');
     }
 
+    const goToManageForum = () =>{
+      history.push('/manageForum');
+    }
+
 
     const list = (anchor) => (
         <div
@@ -95,6 +100,11 @@ const AdminNavbar = () => {
               <ListItem button key={"Manage Quiz"} onClick={() => goToManageQuiz()}>
                 <ListItemIcon><HelpIcon/></ListItemIcon>
                 <ListItemText primary={"Manage Quiz"} />
+              </ListItem>
+
+              <ListItem button key={"Manage Forum"} onClick={() => goToManageForum()}>
+                <ListItemIcon><PeopleIcon/></ListItemIcon>
+                <ListItemText primary={"Manage Forum"} />
               </ListItem>
             
               <ListItem button key={"Question List"} onClick={() => goToQuestionList()}>

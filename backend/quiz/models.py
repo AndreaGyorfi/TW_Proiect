@@ -20,8 +20,8 @@ class Quiz(models.Model):
 
 class QuizResult(models.Model):
     result = models.CharField(max_length=200, null=True, blank=True)
-    quiz = models.OneToOneField(Quiz, on_delete=models.CASCADE,null=True, blank=True)
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE,null=True, blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
 
 
 

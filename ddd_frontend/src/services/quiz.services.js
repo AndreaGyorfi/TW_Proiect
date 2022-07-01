@@ -45,6 +45,14 @@ const addQuizResult = (data) =>{
     return axiosInstance.post('/quiz/result/',data);
 }
 
+const getAllResult = () =>{
+    return axiosInstance.get('quiz/getAllResult/');
+}
+
+const getResultsByQuiz = (id) =>{
+    return axiosInstance.get('quiz/getQuizResult/'+id);
+}
+
 export default {
     addQuestion,
     getAllQuestion,
@@ -57,4 +65,6 @@ export default {
     getQuiz,
     editQuiz,
     addQuizResult,
+    getAllResult,
+    getResultsByQuiz,
 }

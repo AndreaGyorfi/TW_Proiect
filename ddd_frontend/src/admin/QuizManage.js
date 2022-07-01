@@ -9,6 +9,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
+import quiz_pic from '../assets/questions.jpg';
+
+
 
 
 const QuizManage = () =>{
@@ -48,7 +51,7 @@ const QuizManage = () =>{
                             <CardMedia
                                 component="img"
                                 height="194"
-                                image="https://skeepers.io/wp-content/uploads/2020/06/questions.jpg"
+                                image={quiz_pic}
                                 alt="Paella dish"
                             />
                             <CardContent>

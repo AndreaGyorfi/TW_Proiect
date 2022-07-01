@@ -11,8 +11,8 @@ urlpatterns = [
     path('createQuiz/', views.create_quiz),
     path('getallquiz/', views.get_allQuiz),
     path('quiz/<int:pk>', views.manageQuiz),
-
     path('result/', views.create_quiz_result),
     path('getAllResult/', views.get_allResult),
+    path('getQuizResult/<int:pk>', views.getQuizResult),
    
 ]

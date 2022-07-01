@@ -12,8 +12,18 @@ const addNewComment = (id,data) =>{
     return axiosInstance.post('/forum/add_comment/'+id, data);
 }
 
+const deleteForum = (id) =>{
+    return axiosInstance.delete('/forum/deletePost/'+id);
+} 
+
+const deleteComment = (id) =>{
+    return axiosInstance.delete('/forum/deleteComment/'+id);
+}
+
 export default {
     addNewPost,
     getAllPosts,
     addNewComment,
+    deleteForum,
+    deleteComment,
 }

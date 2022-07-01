@@ -23,16 +23,32 @@ import CommentIcon from '@material-ui/icons/Comment';
 import forumServices from '../services/forum.services';
 import moment from 'moment';
 import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
+import forum from '../assets/forum.svg';
 import { makeStyles } from '@material-ui/core/styles';
 
 
 const useStyles = makeStyles((theme) => ({
     card_width:{
-        width:400,
+        width:600,
     },
     paper:{
         height:'100%',
     },
+    card: {
+        width: 600,
+        margin: "auto",
+        transition: "0.3s",
+        boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+        "&:hover": {
+          boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
+        }
+      },
+
+      commentfield:{
+        width:400,
+      },
+    
   }));
 
 
@@ -67,6 +83,11 @@ function AddPost(props) {
 
             if (response.data['message'] === "success") {
                 console.log("I'm  here new post");
+                setNewPost({
+                    post_title: "",
+                    post_content: "",
+                }
+                )
                 onClose();
             } else {
                 console.log('save error');
@@ -204,6 +225,7 @@ const Forum = () => {
 
             if (response.data['message'] === "success") {
                 retriveAllPosts();
+                setNewComment("");
             } else {
                 console.log('save error');
             }
@@ -228,7 +250,36 @@ const Forum = () => {
             >
 
                 <Grid item>
-                    <Typography variant="h3">Welcome in the forum!</Typography>
+                <Card className={classes.card}>
+        
+        <CardContent className={classes.content}>
+
+            <Grid container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+            >
+
+                <Grid item >
+          <Typography
+            className={"MuiTypography--heading"}
+            variant={"h6"}
+            gutterBottom
+          >
+            Talk together!
+          </Typography>
+          </Grid>
+
+          <Grid item >
+          <img src={forum} width={200} heigh={200}/>
+          </Grid>
+
+          </Grid>
+          
+          <Divider className={classes.divider} light />
+        </CardContent>
+      </Card>
+                    
 
                 </Grid>
 
@@ -266,7 +317,7 @@ const Forum = () => {
                         <br/>
                         <TreeItem nodeId={item.id} label={
                             <>
-                            <Card className={classes.card_width} >
+                            <Card  className={classes.card} >
                             <CardContent>
                                 <Typography variant="h5" component="h2">
                                 {item.post_title}
@@ -277,7 +328,8 @@ const Forum = () => {
                             </CardContent>
                             <CardActions>
                                 <Chip label={item.post_owner['username']} color="primary" />
-                                <Chip label={moment(item.create_time).format('MMMM Do YYYY, h:mm:ss a')}/>
+                                <Chip label={moment(item.create_time).format('MMMM Do YYYY, h:mm a')}/>
+                                <Typography variant='caption'>{item.comments.length} Comments</Typography>
                             </CardActions>
                             </Card>
                             
@@ -285,14 +337,14 @@ const Forum = () => {
                         }>
                             {item.comments['comment_owner'] === null ? (<>
                            
-                                <TreeItem nodeId="newID" label={
+                                <TreeItem nodeId="newID"  label={
                                     <>
                                 <Grid container spacing={1} alignItems="flex-end">
                                 <Grid item>
                                     <CommentIcon />
                                 </Grid>
                                 <Grid item>
-                                    <TextField multiline minRows={2} variant="outlined" name="newComment" onChange={handleNewComment} value={newComment} label="Comment..." />
+                                    <TextField className={classes.commentfield} multiline minRows={3} variant="outlined" name="newComment" onChange={handleNewComment} value={newComment} label="Comment..." />
                                 </Grid>
                                 <Grid item>
                                     <Button size="small" color="primary" variant="contained" onClick={() => sendComment(item.id)}>Send</Button>
@@ -332,7 +384,7 @@ const Forum = () => {
                                     <CommentIcon />
                                 </Grid>
                                 <Grid item>
-                                    <TextField multiline minRows={2} variant="outlined" name="newComment" onChange={handleNewComment} value={newComment} label="Comment..." />
+                                    <TextField className={classes.commentfield} multiline minRows={3} variant="outlined" name="newComment" onChange={handleNewComment} value={newComment} label="Comment..." />
                                 </Grid>
                                 <Grid item>
                                     <Button size="small" color="primary" variant="contained" onClick={() => sendComment(item.id)}>Send</Button>

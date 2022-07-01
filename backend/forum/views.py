@@ -74,6 +74,49 @@ def get_allPost(request,*args,**kwargs):
     
     return Response(all_posts_ser.data)
 
+@api_view(['DELETE'])
+def deletePost(request,*args,**kwargs):
+
+    if request.method == 'DELETE':
+        pk = kwargs.get('pk')
+        print(pk)
+        post_obj = Post.objects.get(pk=pk)
+        
+        try:
+            post_obj.delete()
+            response_data = {
+                'message': 'success',
+            }
+
+            return JsonResponse(response_data, status=status.HTTP_201_CREATED)
+        except:
+            response_data = {
+                'message':'failed',
+            }
+            return JsonResponse(response_data, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['DELETE'])
+def deleteComment(request,*args,**kwargs):
+
+    if request.method == 'DELETE':
+        pk = kwargs.get('pk')
+        print(pk)
+        comment_obj = Comment.objects.get(pk=pk)
+        
+        try:
+            comment_obj.delete()
+            response_data = {
+                'message': 'success',
+            }
+
+            return JsonResponse(response_data, status=status.HTTP_201_CREATED)
+        except:
+            response_data = {
+                'message':'failed',
+            }
+            return JsonResponse(response_data, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 @api_view(['POST'])

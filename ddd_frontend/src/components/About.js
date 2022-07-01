@@ -235,7 +235,7 @@ const About = () =>{
                             <Grid item >
                                 <List>
 
-                                <Link href="https://www.printam3d.ro/blog/totul-despre-imprimantele-3d-/" underline="none">
+                                <Link href="/imprimante3d" underline="none">
                                     <ListItem>
                                         <ListItemAvatar>
                                         <Avatar>
@@ -250,7 +250,7 @@ const About = () =>{
                                     </ListItem>
                                 </Link>
                                 
-                                <Link href="https://www.printam3d.ro/blog/totul-despre-printarea-3d-/" underline="none">
+                                <Link href="/scanare" underline="none">
                                     <ListItem>
                                         <ListItemAvatar>
                                         <Avatar>
